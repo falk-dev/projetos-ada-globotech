@@ -2,8 +2,6 @@
 
 import csv  # Módulo nativo do Python usado para manipulação de arquivos CSV.
 
-
-
 # Salva o total de interações por conteúdo em um arquivo CSV.
 def salvar_metricas_interacoes(caminho, metricas):
     with open(caminho, mode='w', newline='', encoding='utf-8') as arquivo:

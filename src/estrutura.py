@@ -1,6 +1,5 @@
 # Cria um dicionário onde a chave é o 'id_conteudo' e o valor é uma lista com todas as interações daquele conteúdo.
 
-
 # Entrada: lista de dicionários (dados do CSV).
 # Saída: dicionário onde a chave é id_conteudo e o valor é uma lista de dicionários (interações).
 def agrupar_por_conteudo(dados):

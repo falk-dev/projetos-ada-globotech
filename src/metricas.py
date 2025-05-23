@@ -4,7 +4,6 @@
 # - Listagem de comentários
 # - Top 5 conteúdos com mais tempo de visualização
 
-
 # Calcula total de interações por tipo (like, share, comment, view_start) para cada conteúdo.
 def calcular_interacoes(dados):
     metricas = {}  # Dicionário - Chave: id_conteudo, Valor: outro dicionário com contagens.

@@ -4,7 +4,6 @@
 # - Tratamento de valores inválidos (como strings vazias ou não numéricas) para zero.
 # - Conversão de valores de data para o formato correto.
 
-
 # Função para remover espaços em branco no início e no fim dos valores das colunas.
 def limpar_espacos(dados):
     # Laço externo percorre cada item (linha) da lista de dicionários.
