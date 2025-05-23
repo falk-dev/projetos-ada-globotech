@@ -1,36 +1,40 @@
+# Arquivo responsável pela limpeza dos dados:
+# - Remoção de espaços desnecessários nas strings.
+# - Conversão de valores numéricos (como id_conteudo e watch_duration_seconds) para inteiros.
+# - Tratamento de valores inválidos (como strings vazias ou não numéricas) para zero.
+# - Conversão de valores de data para o formato correto.
 
-def limpar_dados(lista_dados):
-    dados_limpos = []
 
-    for item in lista_dados:
+# Função para remover espaços em branco no início e no fim dos valores das colunas.
+def limpar_espacos(dados):
+    # Laço externo percorre cada item (linha) da lista de dicionários.
+    for item in dados:
+        # Laço interno percorre cada chave do dicionário.
+        for chave in item:
+            # Verifica se o valor da chave é uma string (str) usando isinstance.
+            if isinstance(item[chave], str):
+                #  Remove espaços em branco antes e depois da string com o método '.strip()'.
+                item[chave] = item[chave].strip()
+
+    return dados  # Retorna a lista de dicionários já tratada.
+
+
+# Função para converter as colunas 'id_conteudo' e 'watch_duration_seconds' de string para inteiro.
+def tratar_dados_numericos(dados):
+    for item in dados:  # Percorre cada linha (dicionário) da lista.
+        # Conversão do campo 'id_conteudo' para inteiro.
         try:
-            id_conteudo = int(item['id_conteudo'].strip())
-            nome_conteudo = item['nome_conteudo'].strip()
-            id_usuario = int(item['id_usuario'].strip())
-            timestamp = item['timestamp_interacao'].strip()
-            plataforma = item['plataforma'].strip()
-            tipo_interacao = item['tipo_interacao'].strip().lower()
-            comment_text = item['comment_text'].strip()
+            item['id_conteudo'] = int(item.get('id_conteudo', 0))
+        except ValueError:
+            item['id_conteudo'] = 0  # Se falhar na conversão, atribui 0.
 
-            raw_duracao = item['watch_duration_seconds'].strip()
-            if raw_duracao == '':
-                duracao = 0 if tipo_interacao == 'view_start' else None
-            else:
-                duracao = int(raw_duracao)
+        # Processamento do campo 'watch_duration_seconds'.
+        valor = item.get('watch_duration_seconds', '').strip()  # Obtém o valor e remove espaços.
 
-            dados_limpos.append({
-                'id_conteudo': id_conteudo,
-                'nome_conteudo': nome_conteudo,
-                'id_usuario': id_usuario,
-                'timestamp_interacao': timestamp,
-                'plataforma': plataforma,
-                'tipo_interacao': tipo_interacao,
-                'watch_duration_seconds': duracao,
-                'comment_text': comment_text
-            })
+        try:
+            # Verifica se o valor é composto apenas por dígitos e converte para inteiro.
+            item['watch_duration_seconds'] = int(valor) if valor.isdigit() else 0
+        except ValueError:
+            item['watch_duration_seconds'] = 0  # Se falhar, atribui 0.
 
-        except (ValueError, TypeError) as e:
-            print(f"Erro na linha {item}: {e}")
-            continue
-
-    return dados_limpos
+    return dados  # Retorna a lista de dicionários com os campos tratados.

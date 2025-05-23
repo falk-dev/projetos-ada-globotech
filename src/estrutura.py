@@ -1,22 +1,18 @@
+# Cria um dicionário onde a chave é o 'id_conteudo' e o valor é uma lista com todas as interações daquele conteúdo.
 
-def estruturar_dados(dados):
-    estrutura = {}
-    for item in dados:
-        id_conteudo = item['id_conteudo']
 
-        if id_conteudo not in estrutura:
-            estrutura[id_conteudo] = {
-                'nome_conteudo': item['nome_conteudo'],
-                'interacoes': []
-            }
+# Entrada: lista de dicionários (dados do CSV).
+# Saída: dicionário onde a chave é id_conteudo e o valor é uma lista de dicionários (interações).
+def agrupar_por_conteudo(dados):
+    agrupado = {}  # Estrutura para agrupar os conteúdos em dicionário.
 
-        estrutura[id_conteudo]['interacoes'].append({
-            'id_usuario': item['id_usuario'],
-            'timestamp_interacao': item['timestamp_interacao'],
-            'plataforma': item['plataforma'],
-            'tipo_interacao': item['tipo_interacao'],
-            'watch_duration_seconds': item['watch_duration_seconds'],
-            'comment_text': item['comment_text']
-        })
+    for item in dados:  # Percorre cada linha/iteração do dataset.
+        id_conteudo = item['id_conteudo']  # Pega o id_conteudo para usar como chave do agrupamento.
 
-    return estrutura
+        # Se o id_conteudo ainda não está no dicionário, cria uma nova lista para ele.
+        if id_conteudo not in agrupado:
+            agrupado[id_conteudo] = []  # Inicializa uma lista vazia.
+
+        agrupado[id_conteudo].append(item)  # Adiciona a interação atual na lista correspondente.
+
+    return agrupado  # Retorna o dicionário agrupado.
