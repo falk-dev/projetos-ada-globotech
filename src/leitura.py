@@ -16,3 +16,4 @@ def carregar_csv(caminho_arquivo):
             dados.append(linha)  # Adiciona cada dicionário na lista de dados com '.append()'.
 
     return dados  # Retorna uma lista de dicionários com os dados lidos.
+
